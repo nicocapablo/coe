@@ -73,3 +73,4 @@ window.onload = () => {
   mostrarMensaje(preguntas[i].texto, "bot");
 };
 
+
