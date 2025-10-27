@@ -900,14 +900,21 @@ function responder(respuestaUsuario) {
 
 // --- INICIO ---
 window.onload = () => {
-  mezclarPreguntas(preguntas); // mezcla garantizada 💯
-  mostrarMensaje("🧠 Bienvenido a tu test de Verdadero/Falso. ¡Pulsa V o F para empezar! 💬", "bot");
-  mostrarMensaje(preguntas[i].texto, "bot");
+  // Mezclar antes de mostrar nada
+  mezclarPreguntas(preguntas);
+  i = 0;
+  puntuacion = 0;
 
-  // Eventos botones
+  // Mensaje de bienvenida
+  mostrarMensaje("🧠 Bienvenido a tu test de Verdadero/Falso. ¡Pulsa V o F para empezar! 💬", "bot");
+
+  // Mostrar la primera pregunta un pelín después (para asegurar renderizado)
+  setTimeout(() => {
+    mostrarMensaje(preguntas[i].texto, "bot");
+  }, 500);
+
+  // Asignar eventos a los botones
   document.getElementById("btnV").onclick = () => responder(true);
   document.getElementById("btnF").onclick = () => responder(false);
 };
-
-
 
