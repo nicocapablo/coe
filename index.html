@@ -4,34 +4,17 @@
   <meta charset="UTF-8" />
   <title>QuizChat 💬</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="chat-container" id="chat"></div>
 
-  <div class="input-container">
-    <input id="userInput" type="text" placeholder="Escribe v o f..." autocomplete="off" inputmode="text" />
-    <button id="sendBtn" type="button">Enviar</button>
+  <div class="button-container">
+    <button id="btnV" class="btn-verdadero">✔️ V</button>
+    <button id="btnF" class="btn-falso">❌ F</button>
   </div>
 
   <script src="script.js"></script>
-  <script>
-    // Enviar con botón y con Enter sin que se cierre el teclado
-    const input = document.getElementById('userInput');
-    const btn = document.getElementById('sendBtn');
-
-    const submit = () => { if (typeof enviar === 'function') enviar(); };
-    btn.addEventListener('click', submit);
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') { e.preventDefault(); submit(); }
-    });
-
-    // Mantener siempre el último mensaje visible
-    input.addEventListener('focus', () => {
-      const chat = document.getElementById('chat');
-      setTimeout(() => chat.scrollTop = chat.scrollHeight, 100);
-    });
-  </script>
 </body>
 </html>
+
