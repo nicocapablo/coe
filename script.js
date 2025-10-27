@@ -1,4 +1,4 @@
-// --- PREGUNTAS (simplificadas para probar) ---
+// --- PREGUNTAS DE PRUEBA ---
 const preguntas = [
   { texto: "9 de cada 10 Startup desaparecen en 3 años por falta de clientes.", respuesta: true, explicacion: "Correcto. El principal motivo real suele ser no tener clientes suficientes." },
   { texto: "Dropbox es un buen ejemplo de crowdfunding (PMV).", respuesta: false, explicacion: "Falso. Dropbox usó un video demo tipo Mago de Oz, no crowdfunding." },
@@ -17,7 +17,7 @@ const frases_animo = [
   "¡Te lo sabes de memoria ya! 💥"
 ];
 
-// --- VARIABLES ---
+// --- VARIABLES GLOBALES ---
 let i = 0;
 let puntuacion = 0;
 
@@ -28,16 +28,16 @@ function mostrarMensaje(texto, tipo) {
   msg.classList.add("message", tipo);
   msg.textContent = texto;
   chat.appendChild(msg);
-  chat.scrollTop = chat.scrollHeight;
+  chat.scrollTo({ top: chat.scrollHeight, behavior: "smooth" });
 }
 
-// --- LÓGICA PRINCIPAL ---
 function responder(respuestaUsuario) {
   if (!preguntas[i]) return;
 
   // Mostrar lo que eligió el usuario
-  mostrarMensaje(respuestaUsuario ? "V" : "F", "user");
+  mostrarMensaje(respuestaUsuario ? "✔️ Verdadero" : "❌ Falso", "user");
 
+  // Comprobar
   if (respuestaUsuario === preguntas[i].respuesta) {
     puntuacion++;
     mostrarMensaje(frases_animo[Math.floor(Math.random() * frases_animo.length)], "bot");
@@ -46,15 +46,18 @@ function responder(respuestaUsuario) {
   }
 
   i++;
+
+  // Siguiente pregunta o fin
   if (i < preguntas.length) {
-    setTimeout(() => mostrarMensaje(preguntas[i].texto, "bot"), 600);
+    setTimeout(() => {
+      mostrarMensaje(preguntas[i].texto, "bot");
+    }, 700);
   } else {
     setTimeout(() => {
       mostrarMensaje(`🏁 Has acertado ${puntuacion} de ${preguntas.length} preguntas. 💡 ¡Sigue practicando, que vas de lujo!`, "bot");
-    }, 600);
-    // Desactiva botones al terminar
-    document.getElementById("btnV").disabled = true;
-    document.getElementById("btnF").disabled = true;
+      document.getElementById("btnV").disabled = true;
+      document.getElementById("btnF").disabled = true;
+    }, 800);
   }
 }
 
@@ -64,11 +67,9 @@ window.onload = () => {
   mostrarMensaje("🧠 Bienvenido a tu test de Verdadero/Falso. ¡Pulsa V o F para empezar! 💬", "bot");
   mostrarMensaje(preguntas[i].texto, "bot");
 
-  // Asignar eventos a botones
+  // Eventos botones
   document.getElementById("btnV").onclick = () => responder(true);
   document.getElementById("btnF").onclick = () => responder(false);
 };
-
-
 
 
