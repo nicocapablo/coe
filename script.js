@@ -845,7 +845,6 @@ const frases_animo = [
   "¡Te lo sabes de memoria ya! 💥"
 ];
 
-// --- VARIABLES GLOBALES ---
 let i = 0;
 let puntuacion = 0;
 
@@ -859,22 +858,11 @@ function mostrarMensaje(texto, tipo) {
   chat.scrollTo({ top: chat.scrollHeight, behavior: "smooth" });
 }
 
-// --- FUNCIÓN PARA MEZCLAR CORRECTAMENTE ---
-function mezclarPreguntas(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
 function responder(respuestaUsuario) {
   if (!preguntas[i]) return;
 
-  // Mostrar lo que eligió el usuario
   mostrarMensaje(respuestaUsuario ? "✔️ Verdadero" : "❌ Falso", "user");
 
-  // Comprobar
   if (respuestaUsuario === preguntas[i].respuesta) {
     puntuacion++;
     mostrarMensaje(frases_animo[Math.floor(Math.random() * frases_animo.length)], "bot");
@@ -883,8 +871,6 @@ function responder(respuestaUsuario) {
   }
 
   i++;
-
-  // Siguiente pregunta o fin
   if (i < preguntas.length) {
     setTimeout(() => {
       mostrarMensaje(preguntas[i].texto, "bot");
@@ -898,23 +884,26 @@ function responder(respuestaUsuario) {
   }
 }
 
-// --- INICIO ---
-window.onload = () => {
-  // Mezclar antes de mostrar nada
+// --- FUNCIÓN PARA MEZCLAR ---
+function mezclarPreguntas(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// --- ARRANQUE SEGURO ---
+document.addEventListener("DOMContentLoaded", () => {
   mezclarPreguntas(preguntas);
   i = 0;
   puntuacion = 0;
 
-  // Mensaje de bienvenida
   mostrarMensaje("🧠 Bienvenido a tu test de Verdadero/Falso. ¡Pulsa V o F para empezar! 💬", "bot");
-
-  // Mostrar la primera pregunta un pelín después (para asegurar renderizado)
   setTimeout(() => {
     mostrarMensaje(preguntas[i].texto, "bot");
   }, 500);
 
-  // Asignar eventos a los botones
   document.getElementById("btnV").onclick = () => responder(true);
   document.getElementById("btnF").onclick = () => responder(false);
-};
-
+});
