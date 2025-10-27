@@ -2,49 +2,36 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
   <title>QuizChat 💬</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="stylesheet" href="style.css" />
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-    }
-  </style>
 </head>
-
 <body>
   <div class="chat-container" id="chat"></div>
 
   <div class="input-container">
-    <input id="userInput" type="text" placeholder="Escribe v o f..." autocomplete="off" />
-    <button onclick="enviar()">Enviar</button>
+    <input id="userInput" type="text" placeholder="Escribe v o f..." autocomplete="off" inputmode="text" />
+    <button id="sendBtn" type="button">Enviar</button>
   </div>
 
   <script src="script.js"></script>
-
   <script>
-    // Ajuste automático de altura visible (para iPhone)
-    const chat = document.getElementById('chat');
-    const inputContainer = document.querySelector('.input-container');
+    // Enviar con botón y con Enter sin que se cierre el teclado
+    const input = document.getElementById('userInput');
+    const btn = document.getElementById('sendBtn');
 
-    function ajustarAltura() {
-      if (window.visualViewport) {
-        const vh = window.visualViewport.height;
-        document.body.style.height = vh + 'px';
-        chat.style.maxHeight = (vh - inputContainer.offsetHeight) + 'px';
-        chat.scrollTop = chat.scrollHeight;
-      }
-    }
+    const submit = () => { if (typeof enviar === 'function') enviar(); };
+    btn.addEventListener('click', submit);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); submit(); }
+    });
 
-    window.visualViewport.addEventListener('resize', ajustarAltura);
-    window.addEventListener('focusin', ajustarAltura);
-    window.addEventListener('focusout', ajustarAltura);
-    ajustarAltura();
+    // Mantener siempre el último mensaje visible
+    input.addEventListener('focus', () => {
+      const chat = document.getElementById('chat');
+      setTimeout(() => chat.scrollTop = chat.scrollHeight, 100);
+    });
   </script>
 </body>
 </html>
