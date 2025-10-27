@@ -1,23 +1,24 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100svh; /* adapta a la altura visible real en móviles */
-  font-family: Arial, sans-serif;
+  height: 100svh; /* altura visible en móviles modernos */
   background: #ece5dd;
+  font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
+/* Contenedor del chat */
 .chat-container {
   flex: 1;
   overflow-y: auto;
   padding: 12px;
   box-sizing: border-box;
   scroll-behavior: smooth;
-  padding-bottom: 80px; /* deja hueco para los botones */
   display: flex;
   flex-direction: column;
+  padding-bottom: 90px; /* espacio para los botones */
 }
 
 /* Contenedor de botones */
@@ -27,14 +28,15 @@ html, body {
   left: 0;
   right: 0;
   background: #ffffff;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #ccc;
   display: flex;
   justify-content: center;
-  gap: 16px;
-  padding: 16px calc(env(safe-area-inset-left) + 10px) calc(env(safe-area-inset-bottom) + 16px);
+  gap: 20px;
+  padding: 14px calc(env(safe-area-inset-left) + 10px) calc(env(safe-area-inset-bottom) + 16px);
+  z-index: 10;
 }
 
-/* Botones */
+/* Estilos botones */
 button {
   font-size: 20px;
   font-weight: bold;
@@ -42,7 +44,7 @@ button {
   border-radius: 12px;
   padding: 14px 28px;
   cursor: pointer;
-  transition: transform 0.1s ease;
+  transition: transform 0.1s ease, background 0.3s ease;
 }
 
 button:active {
@@ -59,25 +61,30 @@ button:active {
   color: white;
 }
 
-/* Mensajes */
+/* Mensajes tipo chat */
 .message {
   max-width: 80%;
   margin: 6px 0;
-  padding: 10px 12px;
+  padding: 10px 14px;
   border-radius: 14px;
   word-wrap: break-word;
+  font-size: 16px;
+  line-height: 1.4;
 }
 
 .message.bot {
   background: #ffffff;
   align-self: flex-start;
   border-top-left-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .message.user {
   background: #dcf8c6;
   align-self: flex-end;
   border-top-right-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
+
 
 
