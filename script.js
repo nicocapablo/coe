@@ -859,6 +859,15 @@ function mostrarMensaje(texto, tipo) {
   chat.scrollTo({ top: chat.scrollHeight, behavior: "smooth" });
 }
 
+// --- FUNCIÓN PARA MEZCLAR CORRECTAMENTE ---
+function mezclarPreguntas(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 function responder(respuestaUsuario) {
   if (!preguntas[i]) return;
 
@@ -891,7 +900,7 @@ function responder(respuestaUsuario) {
 
 // --- INICIO ---
 window.onload = () => {
-  preguntas.sort(() => Math.random() - 0.5); // mezcla aleatoria
+  mezclarPreguntas(preguntas); // mezcla garantizada 💯
   mostrarMensaje("🧠 Bienvenido a tu test de Verdadero/Falso. ¡Pulsa V o F para empezar! 💬", "bot");
   mostrarMensaje(preguntas[i].texto, "bot");
 
