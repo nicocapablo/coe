@@ -72,3 +72,4 @@ window.onload = () => {
   mostrarMensaje("🧠 Bienvenido a tu test de Verdadero/Falso.\nResponde con 'v' o 'f'. ¡Vamos allá! 💬", "bot");
   mostrarMensaje(preguntas[i].texto, "bot");
 };
+
